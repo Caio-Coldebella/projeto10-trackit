@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import logo from "../assets/logo.png"
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 export default function Login(){
     const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ export default function Login(){
             <INPUT type="password" required placeholder="senha" value={password} onChange={e=> setPassword(e.target.value)}/>
             <BUTTON type="submit">Entrar</BUTTON>
         </FORM>
-        <LINK>Não tem uma conta? Cadastre-se!</LINK>
+        <Link to="/cadastro"><LINK>Não tem uma conta? Cadastre-se!</LINK></Link>
         </LOGIN>
     );
 }
