@@ -18,6 +18,14 @@ export default function Login(){
         };
         const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",objpost);
         promisse.then(res => {setUser(res.data); navigate("/hoje")})
+        /*
+        email: "caioruiz@email.com"
+        id: 4684
+        image: "https://upload.wikimedia.org/wikipedia/commons/c/cc/O_Xaropinho.jpg"
+        name: "Caio"
+        password: "senha"
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey
+        */
     }
     return(
         <styles.LOGIN>
