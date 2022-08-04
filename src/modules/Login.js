@@ -1,10 +1,12 @@
 import logo from "../assets/logo.png"
-import {useState} from "react";
+import {useState, useContext} from "react";
+import UserContext from "../contexts/UserContext";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import styles from "./LoginCss";
 
 export default function Login(){
+    const {user,setUser} = useContext(UserContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password,setPassword] = useState("");
@@ -15,7 +17,7 @@ export default function Login(){
             password: password
         };
         const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",objpost);
-        promisse.then(res => {console.log(res.data)})
+        promisse.then(res => {setUser(res.data); navigate("/hoje")})
     }
     return(
         <styles.LOGIN>

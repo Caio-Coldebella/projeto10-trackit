@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import UserContext from "./contexts/UserContext";
 import Login from "./modules/Login";
@@ -9,8 +10,9 @@ import "./css/reset.css";
 import "./css/style.css";
 
 export default function App(){
+    const [user, setUser] = useState("");
     return(
-        <>
+        <UserContext.Provider value={{user,setUser}}>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login/>}/>
@@ -20,6 +22,6 @@ export default function App(){
                 <Route path="/historico" element={<Historic/>}/>
             </Routes>
         </BrowserRouter>        
-        </>
+        </UserContext.Provider>
     );
 }
