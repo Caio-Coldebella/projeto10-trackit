@@ -32,7 +32,7 @@ export default function Habits(){
         <CONTENT>
             <TOPCONTENT>
                 <TXT>Meus hábitos</TXT>
-                <ADD onClick={()=>{setCreatehabit(<CreateHabit set={setNewhabit} value={newhabit}/>)}}>+</ADD>
+                <ADD onClick={()=>{setCreatehabit(<CreateHabit setNewhabit={setNewhabit} newhabit={newhabit} setCreatehabit={setCreatehabit}/>)}}>+</ADD>
             </TOPCONTENT>
             {createhabit}
             {nohabits}
