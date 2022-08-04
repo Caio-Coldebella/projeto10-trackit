@@ -5,12 +5,14 @@ import {
     buildStyles
   } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Bottombar(){
+    const navigate = useNavigate();
     const [percentage,setPercentage] = useState(0);
     return(
         <>
-        <PROGRESSBAR onClick={()=>{setPercentage((percentage+10)%100)}}>
+        <PROGRESSBAR onClick={()=>{navigate("/hoje")}}>
             <CircularProgressbar
         value={percentage}
         text={`Hoje`}
@@ -25,8 +27,8 @@ export default function Bottombar(){
       />
         </PROGRESSBAR>
         <BOTTOM>
-            <TEXT>Hábitos</TEXT>
-            <TEXT>Histórico</TEXT>
+            <Link to="/habitos" style={{textDecoration:"none"}}><TEXT>Hábitos</TEXT></Link>
+            <Link to="/historico" style={{textDecoration:"none"}}><TEXT>Histórico</TEXT></Link>
         </BOTTOM>
         </>
     );
@@ -39,6 +41,9 @@ const PROGRESSBAR = styled.div`
     z-index: 2;
     height: 91px;
     width: 91px;
+    & :hover{
+        cursor: pointer;
+    }
 `;
 const BOTTOM = styled.div`
     position: fixed;
