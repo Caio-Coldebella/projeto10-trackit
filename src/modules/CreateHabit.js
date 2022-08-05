@@ -33,6 +33,7 @@ export default function CreateHabit(props){
         };
         const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",objpost,config);
         promisse.then(res =>{props.setNewhabit([res.data]);setDisable(false);setTextbutton("Salvar");props.setCreatehabit(null);});
+        promisse.catch(() => {alert("Ocorreu um erro inesperado");setDisable(false);setTextbutton("Salvar")})
         return null;
     }
     console.log(previous)
