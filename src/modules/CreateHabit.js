@@ -2,6 +2,7 @@ import { useEffect, useState,useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 import CreateHabitButton from "./CreateHabitButton";
+import NewhabitContext from "../contexts/NewhabitContext";
 import axios from "axios";
 
 export default function CreateHabit(props){
@@ -9,9 +10,10 @@ export default function CreateHabit(props){
     const [name,setName] = useState("");
     const [days,setDays] = useState([]);
     const [daybutton, setDaybutton] = useState([]);
+    const {previous, setPrevious} = useContext(NewhabitContext);
     const arrdays = ["D","S","T","Q","Q", "S","S"];
     useEffect(()=>{
-        let arr = arrdays.map((item,index)=>{return <CreateHabitButton key={index} days={days} setDays={setDays} name={item} number={index}/>;});
+        let arr = arrdays.map((item,index)=>{return <CreateHabitButton key={index} days={previous.days !== null? previous.days: days} setDays={setDays} name={item} number={index}/>;});
         setDaybutton(arr);
     },[]);
     function sendData(event){
@@ -29,16 +31,17 @@ export default function CreateHabit(props){
         props.setCreatehabit(null);
         return null;
     }
+    console.log(previous)
     return(
         <FORM onSubmit={sendData}>
             <div>
-            <INPUT type="text" required value={name} onChange={e=> {setName(e.target.value)}}/>
+            <INPUT type="text" required value={name} placeholder={previous.name? previous.name:"nome do hábito"} onChange={e=> {setName(e.target.value)}}/>
             <BUTTONS>
                 {daybutton}
             </BUTTONS>
             </div>
             <SUBMITBUTTONS>
-                <CANCEL onClick={()=> {props.setCreatehabit(null)}}>Cancelar</CANCEL>
+                <CANCEL onClick={()=> {setPrevious({name: (name?name:previous.name), days: ((days.length>0)?days:previous.days)});props.setCreatehabit(null)}}>Cancelar</CANCEL>
                 <SAVE type="submit">Salvar</SAVE>
             </SUBMITBUTTONS>
         </FORM>

@@ -35,7 +35,7 @@ export default function Habits(){
         <CONTENT>
             <TOPCONTENT>
                 <TXT>Meus hábitos</TXT>
-                <ADD onClick={()=>{setCreatehabit(<CreateHabit setNewhabit={setNewhabit} setCreatehabit={setCreatehabit}/>)}}>+</ADD>
+                <ADD onClick={()=>{setCreatehabit(<CreateHabit setNewhabit={setNewhabit} setCreatehabit={setCreatehabit} />)}}>+</ADD>
             </TOPCONTENT>
             {createhabit}
             {habits.map((item,index)=> { return <Habit key={index} id={index} name={item.name} days={item.days} deleteHabit={deleteHabit}/>})}

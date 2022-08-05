@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import UserContext from "./contexts/UserContext";
+import NewhabitContext from "./contexts/NewhabitContext";
 import Login from "./modules/Login";
 import Register from "./modules/Register";
 import Habits from "./modules/Habits";
@@ -11,7 +12,9 @@ import "./css/style.css";
 
 export default function App(){
     const [user, setUser] = useState("");
+    const [previous, setPrevious] = useState({name: null, days: null});
     return(
+        <NewhabitContext.Provider value={{previous,setPrevious}}>
         <UserContext.Provider value={{user,setUser}}>
         <BrowserRouter>
             <Routes>
@@ -23,5 +26,6 @@ export default function App(){
             </Routes>
         </BrowserRouter>        
         </UserContext.Provider>
+        </NewhabitContext.Provider>
     );
 }
