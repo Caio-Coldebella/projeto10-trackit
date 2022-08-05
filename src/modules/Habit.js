@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import trash from "../assets/trash.svg";
 
-export default function Habit({name,days}){
+export default function Habit({id,name,days,deleteHabit}){
     const namedays = ["D","S","T","Q","Q","S","S"];
     const [datadays,setDatadays] = useState([]);
+    const [ativated, setAtivated] = useState(false);
     useEffect(()=>{
         let j=0;
         let daystrue = [];
@@ -24,10 +25,51 @@ export default function Habit({name,days}){
             <TABLEDAYS>
                 {datadays}
             </TABLEDAYS>
-            <TRASH src={trash}/>
+            <TRASH src={trash} onClick={()=> {setAtivated(true)}}/>
+            <ALERT ativated={ativated}>
+                <TXT>Tem certeza que deseja deletar este hábito?</TXT>
+                <div>
+                    <CANCEL onClick={()=> {setAtivated(false)}}>Cancelar</CANCEL>
+                    <CONFIRM onClick={()=> {deleteHabit(id);setAtivated(false)}}>Confirmar</CONFIRM>
+                </div>
+            </ALERT>
         </CONTENT>
     );
 }
+const ALERT = styled.div`
+    display: ${props => props.ativated? "flex": "none"};
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    left: 25%;
+    top: calc(50% - 70px);
+    z-index: 2;
+    width: 50%;
+    height: 140px;
+    padding: 8px 8px 8px 8px;
+    border: 1px solid #666666;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+`;
+const CANCEL = styled.button`
+    width: 84px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    font-size: 16px;
+    color: #52b6ff;
+`;
+const CONFIRM = styled.button`
+    width: 84px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    background-color: #52B6FF;
+    font-size: 16px;
+    color: #FFFFFF;
+`;
 const CONTENT = styled.div`
     position: relative;
     display: flex;

@@ -9,15 +9,12 @@ import Habit from "./Habit";
 
 export default function Habits(){
     const {user,setUser} = useContext(UserContext);
+    const config = {headers:{Authorization: `Bearer ${user.token}`}};
     const [habits, setHabits] = useState([]);
     const [nohabits,setNohabits] = useState(null);
     const [createhabit,setCreatehabit] = useState(null);
     const [newhabit, setNewhabit] = useState(null);
     useEffect(()=>{
-        const config = {headers:{
-            Authorization: `Bearer ${user.token}`
-            }
-        };
         const promisse = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",config);
         promisse.then(res => {
             setHabits(res.data);
@@ -27,7 +24,11 @@ export default function Habits(){
             }
         });
     },[newhabit]);
-    console.log(habits)
+    function deleteHabit(index){
+        const habitdeleted = habits[index];
+        const promisse = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitdeleted.id}`,config);
+        promisse.then(()=>{setNewhabit(habitdeleted)});
+    }
     return(
         <>
         <Topbar/>
@@ -37,7 +38,7 @@ export default function Habits(){
                 <ADD onClick={()=>{setCreatehabit(<CreateHabit setNewhabit={setNewhabit} setCreatehabit={setCreatehabit}/>)}}>+</ADD>
             </TOPCONTENT>
             {createhabit}
-            {habits.map((item,index)=> { return <Habit key={index} name={item.name} days={item.days}/>})}
+            {habits.map((item,index)=> { return <Habit key={index} id={index} name={item.name} days={item.days} deleteHabit={deleteHabit}/>})}
             {nohabits}
         </CONTENT>
         <Bottombar/>
