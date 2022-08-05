@@ -5,6 +5,7 @@ import Topbar from "./Topbar";
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 import CreateHabit from "./CreateHabit";
+import Habit from "./Habit";
 
 export default function Habits(){
     const {user,setUser} = useContext(UserContext);
@@ -36,6 +37,7 @@ export default function Habits(){
                 <ADD onClick={()=>{setCreatehabit(<CreateHabit setNewhabit={setNewhabit} setCreatehabit={setCreatehabit}/>)}}>+</ADD>
             </TOPCONTENT>
             {createhabit}
+            {habits.map((item,index)=> { return <Habit key={index} name={item.name} days={item.days}/>})}
             {nohabits}
         </CONTENT>
         <Bottombar/>
