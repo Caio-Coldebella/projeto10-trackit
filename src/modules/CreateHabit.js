@@ -24,23 +24,23 @@ export default function CreateHabit(props){
         setDisable(true);
         setTextbutton(<PulseLoader color="#FFFFFF"/>);
         const objpost = {
-            name: name,
-            days: days
+            name: (name?name:previous.name),
+            days: ((days.length>0)?days:previous.days)
         };
         const config = {headers:{
             Authorization: `Bearer ${user.token}`
             }
         };
         const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",objpost,config);
-        promisse.then(res =>{props.setNewhabit([res.data]);setDisable(false);setTextbutton("Salvar");props.setCreatehabit(null);});
-        promisse.catch(() => {alert("Ocorreu um erro inesperado");setDisable(false);setTextbutton("Salvar")})
+        promisse.then(res =>{props.setNewhabit([res.data]);setDisable(false);setTextbutton("Salvar");props.setCreatehabit(null);setPrevious({name: null, days: null});});
+        promisse.catch(() => {alert("Preencha o nome do hábito");setDisable(false);setTextbutton("Salvar")})
         return null;
     }
     console.log(previous)
     return(
         <FORM onSubmit={sendData}>
             <div>
-            <INPUT type="text" disabled={disable} required value={name} placeholder={previous.name? previous.name:"nome do hábito"} onChange={e=> {setName(e.target.value)}}/>
+            <INPUT type="text" disabled={disable} value={name} placeholder={previous.name? previous.name:"nome do hábito"} onChange={e=> {setName(e.target.value)}}/>
             <BUTTONS disable={disable}>
                 {daybutton}
             </BUTTONS>
