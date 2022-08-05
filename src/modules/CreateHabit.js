@@ -1,4 +1,5 @@
-import { useEffect, useState,useContext } from "react";
+import { React,useEffect, useState,useContext } from "react";
+import PulseLoader from '@bit/davidhu2000.react-spinners.pulse-loader';
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 import CreateHabitButton from "./CreateHabitButton";
@@ -12,6 +13,7 @@ export default function CreateHabit(props){
     const [daybutton, setDaybutton] = useState([]);
     const {previous, setPrevious} = useContext(NewhabitContext);
     const [disable, setDisable] = useState(false);
+    const [textbutton, setTextbutton] = useState("Salvar");
     const arrdays = ["D","S","T","Q","Q", "S","S"];
     useEffect(()=>{
         let arr = arrdays.map((item,index)=>{return <CreateHabitButton key={index} days={previous.days !== null? previous.days: days} setDays={setDays} name={item} number={index}/>;});
@@ -20,6 +22,7 @@ export default function CreateHabit(props){
     function sendData(event){
         event.preventDefault();
         setDisable(true);
+        setTextbutton(<PulseLoader color="#FFFFFF"/>);
         const objpost = {
             name: name,
             days: days
@@ -29,7 +32,7 @@ export default function CreateHabit(props){
             }
         };
         const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",objpost,config);
-        promisse.then(res =>{props.setNewhabit([res.data]);setDisable(false);props.setCreatehabit(null);});
+        promisse.then(res =>{props.setNewhabit([res.data]);setDisable(false);setTextbutton("Salvar");props.setCreatehabit(null);});
         return null;
     }
     console.log(previous)
@@ -43,7 +46,7 @@ export default function CreateHabit(props){
             </div>
             <SUBMITBUTTONS>
                 <CANCEL disabled={disable} onClick={()=> {setPrevious({name: (name?name:previous.name), days: ((days.length>0)?days:previous.days)});props.setCreatehabit(null)}}>Cancelar</CANCEL>
-                <SAVE disabled={disable} type="submit">Salvar</SAVE>
+                <SAVE disabled={disable} type="submit">{textbutton}</SAVE>
             </SUBMITBUTTONS>
         </FORM>
     );
