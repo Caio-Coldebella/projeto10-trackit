@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
+import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 import CreateHabitButton from "./CreateHabitButton";
+import axios from "axios";
 
 export default function CreateHabit(props){
+    const {user,setUser} = useContext(UserContext);
     const [name,setName] = useState("");
     const [days,setDays] = useState([]);
     const [daybutton, setDaybutton] = useState([]);
@@ -13,7 +16,16 @@ export default function CreateHabit(props){
     },[]);
     function sendData(event){
         event.preventDefault();
-        
+        const objpost = {
+            name: name,
+            days: days
+        };
+        const config = {headers:{
+            Authorization: `Bearer ${user.token}`
+            }
+        };
+        const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",objpost,config);
+        promisse.then(res =>{props.setNewhabit([res.data])});
         props.setCreatehabit(null);
         return null;
     }

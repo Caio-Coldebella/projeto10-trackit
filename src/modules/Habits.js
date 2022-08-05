@@ -25,14 +25,15 @@ export default function Habits(){
                     Adicione um hábito para começar a trackear!</NOHABITS>);
             }
         });
-    },[]);
+    },[newhabit]);
+    console.log(habits)
     return(
         <>
         <Topbar/>
         <CONTENT>
             <TOPCONTENT>
                 <TXT>Meus hábitos</TXT>
-                <ADD onClick={()=>{setCreatehabit(<CreateHabit setNewhabit={setNewhabit} newhabit={newhabit} setCreatehabit={setCreatehabit}/>)}}>+</ADD>
+                <ADD onClick={()=>{setCreatehabit(<CreateHabit setNewhabit={setNewhabit} setCreatehabit={setCreatehabit}/>)}}>+</ADD>
             </TOPCONTENT>
             {createhabit}
             {nohabits}
