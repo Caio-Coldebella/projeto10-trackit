@@ -24,6 +24,9 @@ export default function CreateHabitButton({days, setDays, name, number}){
     );
 }
 const BUTTON = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 30px;
     height: 30px;
     border: 1px solid #D4D4D4;
