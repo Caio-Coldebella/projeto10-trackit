@@ -1,6 +1,10 @@
-import dayjs from 'dayjs' // ES 2015
+import dayjs from 'dayjs';
+import { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
 import styled from "styled-components";
+import UserContext from "../contexts/UserContext";
 import Bottombar from "./Bottombar";
+import Todayhabit from './Todayhabit';
 import Topbar from "./Topbar";
 
 function translate (string){
@@ -24,8 +28,16 @@ function translate (string){
     }
 }
 export default function Today(){
+    const {user,setUser} = useContext(UserContext);
+    const [habits,setHabits] = useState([]);
+    const config = {headers:{Authorization: `Bearer ${user.token}`}};
     const weekday = translate(dayjs().format('d'));
     const date = dayjs().format('D/MM');
+    useEffect(()=>{
+        const promisse = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",config)
+        promisse.then( res => {setHabits(res.data)});
+    },[]);
+    console.log(habits)
     return(
         <>
             <Topbar/>
@@ -34,6 +46,7 @@ export default function Today(){
                     <DATE>{weekday}, {date}</DATE>
                     <p>Nenhum hábito concluido ainda</p>
                 </Toptext>
+                {habits.map((item,index) => {return <Todayhabit key={index} name={item.name} done={item.done} current={item.currentSequence} highest={item.highestSequence}/>})}
             </CONTENT>
             <Bottombar/>
         </>
