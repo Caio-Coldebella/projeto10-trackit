@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@babel/preset-env": "^7.18.10",
+    "@bit/davidhu2000.react-spinners.pulse-loader": "file:components/pulse-loader",
     "axios": "^0.27.2",
     "bootstrap-icons": "^1.9.1",
+    "dayjs": "^1.11.4",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-circular-progressbar": "^2.1.0",
@@ -16,8 +18,7 @@
     "react-scripts": "^4.0.3",
     "react-spinners": "^0.13.4",
     "styled-components": "^5.3.5",
-    "styled-icons": "^10.45.0",
-    "@bit/davidhu2000.react-spinners.pulse-loader": "file:./components/pulse-loader"
+    "styled-icons": "^10.45.0"
   },
   "scripts": {
     "start": "react-scripts start",
