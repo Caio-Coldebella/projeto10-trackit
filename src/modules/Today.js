@@ -46,7 +46,7 @@ export default function Today(){
                     <DATE>{weekday}, {date}</DATE>
                     <p>Nenhum hábito concluido ainda</p>
                 </Toptext>
-                {habits.map((item,index) => {return <Todayhabit key={index} name={item.name} done={item.done} current={item.currentSequence} highest={item.highestSequence}/>})}
+                {habits.map((item,index) => {return <Todayhabit key={index} id={item.id} name={item.name} done={item.done} current={item.currentSequence} highest={item.highestSequence}/>})}
             </CONTENT>
             <Bottombar/>
         </>
