@@ -37,7 +37,6 @@ export default function Today(){
         const promisse = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",config)
         promisse.then( res => {setHabits(res.data)});
     },[]);
-    console.log(habits)
     return(
         <>
             <Topbar/>
@@ -46,7 +45,7 @@ export default function Today(){
                     <DATE>{weekday}, {date}</DATE>
                     <p>Nenhum hábito concluido ainda</p>
                 </Toptext>
-                {habits.map((item,index) => {return <Todayhabit key={index} id={item.id} name={item.name} done={item.done} current={item.currentSequence} highest={item.highestSequence}/>})}
+                {habits.map((item,index) => {let isrecord=false;if(item.highestSequence === item.currentSequence){isrecord=true} return <Todayhabit key={index} id={item.id} name={item.name} done={item.done} current={item.currentSequence} highest={item.highestSequence} isrecord={isrecord}/>;})}
             </CONTENT>
             <Bottombar/>
         </>
@@ -63,7 +62,7 @@ const CONTENT = styled.div`
     margin: 70px 0 70px 0;
 `;
 const Toptext = styled.div`
-    margin-top: 30px;
+    margin: 30px 0 30px 0;
     font-size: 18px;
     color: #bababa;
 `;
