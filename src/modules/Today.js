@@ -6,6 +6,7 @@ import UserContext from "../contexts/UserContext";
 import Bottombar from "./Bottombar";
 import Todayhabit from './Todayhabit';
 import Topbar from "./Topbar";
+import TasksContext from '../contexts/TasksContext';
 
 function translate (string){
     switch (string) {
@@ -29,6 +30,7 @@ function translate (string){
 }
 export default function Today(){
     const {user,setUser} = useContext(UserContext);
+    const {progress,setProgress} = useContext(TasksContext);
     const [habits,setHabits] = useState([]);
     const config = {headers:{Authorization: `Bearer ${user.token}`}};
     const weekday = translate(dayjs().format('d'));
@@ -37,15 +39,25 @@ export default function Today(){
         const promisse = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",config)
         promisse.then( res => {setHabits(res.data)});
     },[]);
+    useEffect(()=>{
+        let prog = 0;
+        const len = habits.length;
+        for(let i=0; i<len; i++){
+            if(habits[i].done){
+                prog += (1/len);
+            }
+        }
+        setProgress(prog);
+    },[habits]);
     return(
         <>
             <Topbar/>
             <CONTENT>
                 <Toptext>
                     <DATE>{weekday}, {date}</DATE>
-                    <p>Nenhum hábito concluido ainda</p>
+                    {(progress>0.1)? <p style={{color: "#8FC549"}}>{Math.round(progress*100)}% dos hábitos concluídos</p>: <p>Nenhum hábito concluido ainda</p>}
                 </Toptext>
-                {habits.map((item,index) => {let isrecord=false;if(item.highestSequence === item.currentSequence){isrecord=true} return <Todayhabit key={index} id={item.id} name={item.name} done={item.done} current={item.currentSequence} highest={item.highestSequence} isrecord={isrecord}/>;})}
+                {habits.map((item,index) => {let isrecord=false;if(item.highestSequence === item.currentSequence){isrecord=true} return <Todayhabit key={index} id={item.id} name={item.name} done={item.done} current={item.currentSequence} highest={item.highestSequence} isrecord={isrecord} noftasks={habits.length}/>;})}
             </CONTENT>
             <Bottombar/>
         </>

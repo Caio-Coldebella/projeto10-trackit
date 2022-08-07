@@ -1,11 +1,13 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
+import TasksContext from "../contexts/TasksContext";
 import styled from "styled-components";
 import okay from "../assets/check-lg.svg";
 import axios from "axios";
 
 export default function Todayhabit(props){
     const {user,setUser} = useContext(UserContext);
+    const {progress,setProgress} = useContext(TasksContext);
     const config = {headers:{Authorization: `Bearer ${user.token}`}};
     const [marked, setMarked] = useState(props.done);
     const [current, setCurrent] = useState(props.current);
@@ -13,15 +15,17 @@ export default function Todayhabit(props){
     function togglehabit(){
         if(marked){
             const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${props.id}/uncheck`,null,config);
-            promisse.then((res)=>{setMarked(false);
+            promisse.then(()=>{setMarked(false);
                 setCurrent(current - 1)});
+                setProgress(progress - (1/props.noftasks));
                 if(props.isrecord){
                     setHighest(highest -1);
                 }
         }else{
             const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${props.id}/check`,null,config);
-            promisse.then((res)=>{setMarked(true);
+            promisse.then(()=>{setMarked(true);
                 setCurrent(current + 1)});
+                setProgress(progress + (1/props.noftasks));
                 if(props.isrecord){
                     setHighest(highest +1);
                 }
