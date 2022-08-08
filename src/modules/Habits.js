@@ -8,8 +8,8 @@ import CreateHabit from "./CreateHabit";
 import Habit from "./Habit";
 
 export default function Habits(){
-    const {user,setUser} = useContext(UserContext);
-    const config = {headers:{Authorization: `Bearer ${user.token}`}};
+    const user = useContext(UserContext);
+    const config = {headers:{Authorization: `Bearer ${user.user.token}`}};
     const [habits, setHabits] = useState([]);
     const [nohabits,setNohabits] = useState(null);
     const [createhabit,setCreatehabit] = useState(null);

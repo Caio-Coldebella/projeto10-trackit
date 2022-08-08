@@ -3,15 +3,15 @@ import PulseLoader from '@bit/davidhu2000.react-spinners.pulse-loader';
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 import CreateHabitButton from "./CreateHabitButton";
-import NewhabitContext from "../contexts/NewhabitContext";
 import axios from "axios";
+import NewhabitContext from "../contexts/NewhabitContext";
 
 export default function CreateHabit(props){
-    const {user,setUser} = useContext(UserContext);
+    const user = useContext(UserContext);
     const [name,setName] = useState("");
     const [days,setDays] = useState([]);
-    const [daybutton, setDaybutton] = useState([]);
     const {previous, setPrevious} = useContext(NewhabitContext);
+    const [daybutton, setDaybutton] = useState([]);
     const [disable, setDisable] = useState(false);
     const [textbutton, setTextbutton] = useState("Salvar");
     const arrdays = ["D","S","T","Q","Q", "S","S"];
@@ -28,7 +28,7 @@ export default function CreateHabit(props){
             days: ((days.length>0)?days:previous.days)
         };
         const config = {headers:{
-            Authorization: `Bearer ${user.token}`
+            Authorization: `Bearer ${user.user.token}`
             }
         };
         const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",objpost,config);
@@ -36,7 +36,6 @@ export default function CreateHabit(props){
         promisse.catch(() => {alert("Preencha o nome do hábito");setDisable(false);setTextbutton("Salvar")})
         return null;
     }
-    console.log(previous)
     return(
         <FORM onSubmit={sendData}>
             <div>

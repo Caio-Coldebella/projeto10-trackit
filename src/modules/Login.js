@@ -7,7 +7,7 @@ import axios from "axios";
 import styles from "./LoginCss";
 
 export default function Login(){
-    const {user,setUser} = useContext(UserContext);
+    const setUser = useContext(UserContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password,setPassword] = useState("");
@@ -22,7 +22,7 @@ export default function Login(){
             password: password
         };
         const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",objpost);
-        promisse.then(res => {setUser(res.data); navigate("/hoje")})
+        promisse.then(res => {setUser.setUser(res.data); navigate("/hoje")})
         promisse.catch(()=> {setDisable(false);setTextbutton("Entrar");alert("Nome de usuário e/ou senha incorreto");});
     }
     return(

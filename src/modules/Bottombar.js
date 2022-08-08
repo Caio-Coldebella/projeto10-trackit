@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {React,useState, useContext} from "react";
+import {React, useContext} from "react";
 import TasksContext from "../contexts/TasksContext";
 import {
     CircularProgressbar,
@@ -10,12 +10,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Bottombar(){
     const navigate = useNavigate();
-    const {progress,setProgress} = useContext(TasksContext);
+    const progress = useContext(TasksContext);
     return(
         <>
         <PROGRESSBAR onClick={()=>{navigate("/hoje")}}>
             <CircularProgressbar
-        value={progress*100}
+        value={progress.progress*100}
         text={`Hoje`}
         background
         backgroundPadding={6}

@@ -22,7 +22,6 @@ export default function CreateHabitButton({days, setDays, name, number}){
         days.push(num)
         setDays(days);
     }
-    console.log(days)
     return(
         <>
         <BUTTON onClick={()=>{addDay(number);setOn(!on)}} isSet={on}>

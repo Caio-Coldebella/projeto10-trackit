@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext} from "react";
 import UserContext from "../contexts/UserContext";
 import TasksContext from "../contexts/TasksContext";
 import styled from "styled-components";
@@ -6,9 +6,9 @@ import okay from "../assets/check-lg.svg";
 import axios from "axios";
 
 export default function Todayhabit(props){
-    const {user,setUser} = useContext(UserContext);
+    const user = useContext(UserContext);
     const {progress,setProgress} = useContext(TasksContext);
-    const config = {headers:{Authorization: `Bearer ${user.token}`}};
+    const config = {headers:{Authorization: `Bearer ${user.user.token}`}};
     const [marked, setMarked] = useState(props.done);
     const [current, setCurrent] = useState(props.current);
     const [highest, setHighest] = useState(props.highest);
